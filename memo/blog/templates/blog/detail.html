@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>リスト</title>
+</head>
+<body>
+    <div>
+        <a href="{% url 'blog:index' %}">ホームに戻る</a>
+    </div>
+
+    <h2>{{ memo.title }}</h2>
+    <div>
+        {{ memo.text | linebreaks | urlize }}
+    </div>
+
+    <button><a class="btn" href="{% url 'blog:edit_memo' memo.pk %}">編集</a></button>
+
+    <form method="post" action="{% url 'blog:delete_memo' memo.pk %}">{% csrf_token %}
+        <button class="btn" type="submit" onclick='return confirm("本当にいいの？消しちゃうよ？笑");';>削除</button>
+    </form>
+{% endblock %}
+</body>
+</html>
