@@ -2,24 +2,34 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>TOP</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/style.css' %}">
-    <div class="container">
-      <h1><a href="{% url 'blog:index' %}">Hydrangea</a></h1>
-      <a href="">追加</a>
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/css/style.css' %}">
+  {% block title %}{% endblock %}
+</head>
+
+<header>
+  <div class="container">
+    <h1><a href="{% url 'blog:index' %}">Hydrangea</a></h1>
+    <div class="header-menu">
       {% if request.user.is_authenticated %}
-          <a href="">My Page</a>
-          <a href="{% url 'blog:logout' %}">Log Out</a>
+        <a href="">My Page</a>
+        <a href="{% url 'blog:new_memo' %}">追加</a>
+        <a href="{% url 'blog:logout' %}">Log Out</a>
       {% else %}
-          <a href="{% url 'blog:login' %}">Log In</a>
+        <a href="{% url 'blog:login' %}">Log In</a>
       {% endif %}
     </div>
-
-{% block content %}{% endblock %}
-</head>
+  </div>
+</header>
 <body>
-
+  {% block login %}
+    {% if request.user.is_authenticated %}
+      {% block content %}
+      {% endblock %}
+    {% else %}
+      {% block non_user %}
+      {% endblock %}
+    {% endif %}
+  {% endblock %}
 </body>
 </html>
