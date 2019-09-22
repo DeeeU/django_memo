@@ -17,6 +17,9 @@
 
     <h2>{{ memo.title }}</h2>
     <div>
+        <image src ="{{ memo.image }}"></image>
+    </div>
+    <div>
         {{ memo.text | linebreaks | urlize }}
     </div>
 

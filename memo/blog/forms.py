@@ -4,4 +4,4 @@ from .models import Memo
 class MemoForm(ModelForm):
     class Meta:
         model = Memo
-        fields = ['title', 'text']
+        fields = ['title', 'text', 'image']

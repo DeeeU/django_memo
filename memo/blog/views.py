@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.contrib.auth.models import User
 from .models import Memo
 from .forms import MemoForm
 from django.views.decorators.http import require_POST
 # Create your views here.
 
 def index(request):
-    memos = Memo.objects.all().order_by('-updated_datetime')
-    return render(request,'blog/index.html', { 'memos': memos})
+  memos = Memo.objects.all().order_by('-updated_datetime')
+  return render(request,'blog/index.html', {'memos': memos})
 
 def detail(request, memo_id):
   memo = get_object_or_404(Memo, id=memo_id)
@@ -40,3 +41,7 @@ def new_memo(request):
     form = MemoForm
 
   return render(request, 'blog/new_memo.html', {'form': form})
+
+def users_detail(request,pk):
+  user = get_object_or_404(User, pk=pk)
+  return render(request, 'blog/users_detail.html', {'user':user})
