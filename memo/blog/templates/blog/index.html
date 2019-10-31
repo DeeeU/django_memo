@@ -2,27 +2,24 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        {% block title %}<title>Hydrangea</title>{% endblock %}
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block title %}<title>Hydrangea</title>{% endblock %}
+</head>
 <body>
+<h2>Hydrangea</h2>
+
 {% block non_user %}
-    <h2>みえてるぅ〜？？</h2>
+    {% include 'blog/non_login.html' %}
 {% endblock %}
 
 {% block content %}
-    <a class="btn" href="{% url 'blog:new_memo' %}">新規メモ制作</a>
-    {% for memo in memos %}
-    <a href="{% url 'blog:detail' memo.id %}" class="memo-title">
-        <div>
-            {{memo}}
-            <span class="updated_datetime">{{ memo.updated_datetime }}</span>
-        </div>
-    </a>
-    {% endfor %}
+    {% if category %}
+    <h2>カテゴリー：{{ category.title }} の検索結果</h2>
+    {% endif %}
+    {% include 'blog/memo_list.html' %}
 {% endblock %}
 </body>
 </html>

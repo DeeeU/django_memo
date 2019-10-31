@@ -1,8 +1,14 @@
 from django.contrib import admin
-from .models import Memo
-# Register your models here.
-class MemoAdmin(admin.ModelAdmin):
-    list_display = ('id','image','title','created_datetime','updated_datetime')
-    list_display_links = ('id','image','title')
+from .models import Category,Top
 
-admin.site.register(Memo,MemoAdmin)
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
+    list_display_links = ('id', 'title')
+
+class TopAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'user')
+    list_display_links = ('id', 'title')
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Top, TopAdmin)

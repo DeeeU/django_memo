@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block title %}<title>{{ photo.title }}</title>{% endblock %}
+</head>
+<body>
+{% block content %}
+    <div class="photo-detail">
+
+    <img src="{{ photo.image.url }}" class="photo-img">
+    <div class="photo-info">
+        <a href="{% url 'blog:users_detail' photo.user.id %}">@{{ photo.user }}</a>
+    </div>
+
+    <h2>{{ photo.title }}</h2>
+    <p>{{ photo.short_comment | linebreaks | urlize }}</p>
+
+    {% if request.user == photo.user %}
+        <form method="post" action="{% url 'blog:memo_delete' photo.id %}">{% csrf_token %}
+            <button class="btn" type="submit" onclick='return confirm("本当に削除しちゃう？");'>削除</button>
+        </form>
+    {% endif %}
+
+    </div>
+{% endblock %}
+</body>
+</html>

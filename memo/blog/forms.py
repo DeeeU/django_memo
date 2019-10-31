@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from .models import Memo
+from .models import Top
 
-class MemoForm(ModelForm):
+class TopForm(ModelForm):
     class Meta:
-        model = Memo
-        fields = ['title', 'text', 'image']
+        model = Top
+        fields = ['title', 'short_comment', 'image', 'category']

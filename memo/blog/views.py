@@ -1,47 +1,61 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Memo
-from .forms import MemoForm
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
-# Create your views here.
+from .forms import TopForm
+from .models import Top, Category
 
 def index(request):
-  memos = Memo.objects.all().order_by('-updated_datetime')
-  return render(request,'blog/index.html', {'memos': memos})
+  photos = Top.objects.all().order_by('-created_at')
+  return render(request, 'blog/index.html', {'photos': photos})
 
-def detail(request, memo_id):
-  memo = get_object_or_404(Memo, id=memo_id)
-  return render(request, 'blog/detail.html', {'memo': memo})
+def users_detail(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    photos = user.top_set.all().order_by('-created_at')
+    return render(request, 'blog/users_detail.html', {'user': user, 'photos': photos})
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            input_username = form.cleaned_data['username']
+            input_password = form.cleaned_data['password1']
+            new_user = authenticate(username=input_username, password=input_password)
+            if new_user is not None:
+                login(request, new_user)
+                return redirect('blog:users_detail', pk=new_user.pk)
+    else:
+        form = UserCreationForm()
+    return render(request, 'blog/signup.html', {'form': form})
+
+@login_required
+def memo_new(request):
+    if request.method == "POST":
+        form = TopForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo = form.save(commit=False)
+            photo.user = request.user
+            photo.save()
+        return redirect('blog:users_detail', pk=request.user.pk)
+    else:
+        form = TopForm()
+    return render(request, 'blog/memo_new.html', {'form': form})
+
+
+def memo_detail(request, pk):
+    photo = get_object_or_404(Top, pk=pk)
+    return render(request, 'blog/memo_detail.html', {'photo': photo})
 
 @require_POST
-def delete_memo(request,memo_id):
-  memo = get_object_or_404(Memo, id=memo_id)
-  memo.delete()
-  return redirect('blog:index')
+def memo_delete(request, pk):
+    photo = get_object_or_404(Top, pk=pk)
+    photo.delete()
+    return redirect('blog:users_detail', request.user.id)
 
-def edit_memo(request,memo_id):
-  memo = get_object_or_404(Memo, id=memo_id)
-  if request.method == "POST":
-    form = MemoForm(request.POST, instance=memo)
-    if form.is_valid():
-      form.save()
-      return redirect('blog:index')
-  else:
-    form = MemoForm(instance=memo)
-  return render(request, 'blog/edit_memo.html', {'form':form, 'memo':memo})
-
-def new_memo(request):
-  if request.method == 'POST':
-    form = MemoForm(request.POST)
-    if form.is_valid():
-      form.save()
-      return redirect('blog:index')
-
-  else:
-    form = MemoForm
-
-  return render(request, 'blog/new_memo.html', {'form': form})
-
-def users_detail(request,pk):
-  user = get_object_or_404(User, pk=pk)
-  return render(request, 'blog/users_detail.html', {'user':user})
+def memo_category(request, category):
+    category = Category.objects.get(title=category)
+    photos = Top.objects.filter(category=category).order_by('-created_at')
+    return render(request, 'blog/index.html', {'photos': photos, 'category':category})

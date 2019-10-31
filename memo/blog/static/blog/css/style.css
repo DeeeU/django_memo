@@ -1,99 +1,109 @@
-body {
+html, body {
     margin: 0;
-    padding: 0;
-    background-image: url('blog/image/hydrangea.png');
-    background-size: cover;
-  }
-
-input {
-  margin-left: 10px;
 }
 
-button{
-  background:none;
-  border:0;
-  cursor: pointer;
+div {
+    box-sizing: border-box;
 }
 
-form{
-  display: inline-block;
-}
-
-h1 {
-  margin-top: 0;
-  padding: 10px;
-  font-size: 35px;
-  color: #fff;
-}
-
-.btn{
-  display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #668ad8;
-  color: #FFF;
-  border-bottom: solid 4px #627295;
-  border-radius: 3px;
-  margin-bottom: 10px;
-  animation: 'switchColor' 0.3s steps(2, start) infinite alternate;
-}
-
-@keyframes switchColor {
-  from { background: rgb(230, 82, 210);}
-  to   { background: rgb(208, 121, 218);}
+a {
+    text-decoration: none;
+    color: #000;
 }
 
 .container {
-  width: 80%;
-  margin: auto;
-  overflow: auto;
+    width: 80%;
+    margin: auto;
+    overflow: auto;
 }
 
 header {
-  border-bottom: solid 1px #000;
-  background-color: #df92e9;
-  height: 70px;
+    border-bottom: solid 1px #000;
+    background-color: rgb(90, 34, 90);
+    height: 70px;
 }
 
 header .container {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 body > .container {
-  width: 65%;
-  padding-top: 60px;
+    width: 65%;
+    padding-top: 60px;
 }
 
 header h1 {
-  margin: 0;
-  height: 100%;
-  line-height: 70px;
+    margin: 0;
+    height: 100%;
+    line-height: 70px;
+}
+
+header a {
+    color: greenyellow;
 }
 
 .header-menu {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .header-menu a {
-  padding: 10px;
-  margin-left: 10px;
+    padding: 10px;
+    margin-left: 10px;
 }
 
-.memo-title {
-  display: block;
-  border-bottom: 1px solid #ddd;
-  padding: 20px;
-  font-size: 20px;
-  color: rgb(90, 44, 116);
-  text-decoration: none;
+.photo {
+    width: calc(100%/3);
+    float: left;
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
-.memo-title:hover{
-  background-color: #eee;
+.photo a {
+    display: block;
 }
 
-.updated_datetime{
-  float: right;
+.photo-info a:hover {
+    text-decoration: underline;
+}
+
+.photo-info .category {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #000;
+}
+
+.user-name {
+    font-size: 30px;
+}
+
+.photo-img {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.photo-img:hover {
+    opacity: 0.8;
+}
+
+.photo-detail .photo-img{
+    object-fit: contain;
+}
+
+.photo-detail .photo-img:hover {
+    opacity: 1;
+}
+
+.message-success {
+    background-color: #00d1b2;
+    padding: 10px;
+    padding-left: 30px;
+    border-radius: 4px;
 }
