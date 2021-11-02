@@ -1,28 +1,30 @@
-
 {% extends 'blog/base.html' %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="jp">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% block title %}<title>Login Page</title>{% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  {% block title %}<title>Login Page</title>{% endblock %}
 </head>
+
 <body>
-{% block login %}
-<form class="form-signin" method="post">{% csrf_token %}
+  {% block login %}
+  <form class="form-signin" method="post">{% csrf_token %}
     <h2>Login Page</h2>
     {% if form.errors %}
-        <p>なんか間違ってね？笑　もう一回入力して</p>
+    <p>なんか間違ってない？　もう一回入力してみてね</p>
     {% endif %}
     <label>UserName</label>
     <input type="username" name="username">
     <br>
     <label>PassWord</label>
     <input type="password" name="password">
-    <br/>
+    <br />
     <input type="submit" value="ログイン">
-</form>
-{% endblock %}
+  </form>
+  {% endblock %}
 </body>
+
 </html>
